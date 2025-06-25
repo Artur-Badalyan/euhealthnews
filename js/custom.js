@@ -97,6 +97,8 @@ function tick() {
   }
   secs = secs >= 10 ? secs : "0" + secs;
   mins = mins >= 10 ? mins : "0" + mins;
-  $("#min").html(mins);
-  $("#sec").html(secs);
+  var minElem = document.getElementById("min");
+  var secElem = document.getElementById("sec");
+  if (minElem) minElem.textContent = mins;
+  if (secElem) secElem.textContent = secs;
 }
