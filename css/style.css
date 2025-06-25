@@ -246,7 +246,7 @@ a {
   width: 30%;
 }
 .womanCom__comCounter {
-  margin: 0;
+  margin: 0 4px;
   padding: 0;
   font-family: sans-serif;
   font-weight: 700;
@@ -259,8 +259,8 @@ a {
   display: flex;
   margin: 0 5px;
   padding: 0;
-  width: 100%;
-  height: 18px;
+  width: 24px;
+  height: 24px;
   max-width: 19px;
 }
 .womanCom__icon {
@@ -676,7 +676,7 @@ a {
   padding: 0 12px;
 }
 .womanFooter__aboutContainer ul li a {
-  color: #00000080;
+  color: #333333;
 }
 .womanFooter__aboutLink {
   margin: 0;
@@ -688,6 +688,7 @@ a {
   line-height: 24px;
   word-break: break-word;
   text-align: center;
+  color: #333333;
 }
 .womanFooter__logoConainer {
   display: flex;
@@ -1002,11 +1003,6 @@ a {
   padding: 0;
   max-width: 125px;
 }
-.womanStatistics__readTime {
-  display: flex;
-  flex-grow: 2;
-  justify-content: flex-end;
-}
 .womanStatistics__imgWrapper {
   display: flex;
   margin: 0 5px 0 0;
@@ -1019,16 +1015,6 @@ a {
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
-.womanStatistics a.womanStatistics__link {
-  color: #757575;
-}
-.womanStatistics .womanStatistics__link {
-  font-family: sans-serif;
-  font-weight: 400;
-  font-size: 17px;
-  line-height: 24px;
-  word-break: break-word;
 }
 .womanStatistics__text,
 .womanTitle {
@@ -1170,9 +1156,6 @@ a {
   }
   .womanFooter__aboutLink {
     font-size: 13px;
-  }
-  .womanStatistics__readTime {
-    margin: 10px 0 0;
   }
   .womanStatistics__text {
     font-size: 14px;
