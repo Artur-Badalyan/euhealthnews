@@ -223,7 +223,7 @@ a {
   word-break: break-word;
 }
 .womanCom__complain {
-  color: #818181;
+  color: #333333;
 }
 .womanCom__reply {
   padding-right: 15px;
@@ -342,8 +342,7 @@ a {
 .grassComp__info {
   min-height: 95px;
 }
-.grassComp__step,
-.grassComp__stepDescription {
+.grassComp__step {
   padding: 5px 5px 0;
   width: 100%;
   font-family: sans-serif;
@@ -367,7 +366,8 @@ a {
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.69px;
-  color: #6f8ba4;
+  color: #436380;
+  text-align: center;
 }
 .iti {
   position: relative;
