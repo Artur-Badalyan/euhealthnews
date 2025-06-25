@@ -3330,35 +3330,40 @@
   </script>
 
 
-  <script>const MAX_NAME_LEN = "255";
+  <script>
+    const MAX_NAME_LEN = "255";
     const MIN_NAME_LEN = "1";
     const MIN_PHONE_LEN = '9';
     const MAX_PHONE_LEN = '14';
+
     const MESSAGES = {
       NAME_HINT: "Unesite svoje ime",
       PHONE_HINT: "Unesite vaš telefonski broj",
       WRONG_NAME: "Provjerite jeste li unijeli točan naziv",
       WRONG_PHONE: "Provjerite jeste li unijeli točan telefonski broj"
     }
+
     const USER_HINT_MESSAGE_ID = 'msg_for_user_in_form'
     const FORBIDDEN_SYMBOLS = ['\'', '"', '#', '&', '-', '\\', '@', '!', '~', '`', '|', '/', '^', '(', '{', ';', ':'];
     const PERMITTED_PHONE_SYMBOLS = /[^+0-9]/gi;
-    const FORMS = [];
+    
+    
+    document.querySelectorAll('form').forEach(function (form, i) {
+      if (!form.querySelector("input[name='name']") || !form.querySelector("input[name='phone']")) return;
 
-    for (let form of document.forms) {
-      FORMS.push(form);
-    }
+      const prepareNameField = form.querySelector("input[name='name']");
+      const preparePhoneField = form.querySelector("input[name='phone']");
 
-    FORMS.forEach(function (form, i) {
-      if (
-        null === form.querySelector("input[name='name']") ||
-        null === form.querySelector("input[name='phone']")
-      ) return;
-      const prepareNameField = form.querySelector("input[name='name']")
-      prepareNameField.setAttribute('type', 'text')
-      prepareNameField.setAttribute('maxlength', MAX_NAME_LEN)
-      prepareNameField.setAttribute('minlength', MIN_NAME_LEN)
-      prepareNameField.setAttribute('autocomplete', 'off')
+      prepareNameField.type = 'text';
+      prepareNameField.maxLength = MAX_NAME_LEN;
+      prepareNameField.minLength = MIN_NAME_LEN;
+      prepareNameField.autocomplete = 'off';
+
+      preparePhoneField.type = 'tel';
+      preparePhoneField.maxLength = MAX_PHONE_LEN;
+      preparePhoneField.minLength = MIN_PHONE_LEN;
+      preparePhoneField.autocomplete = 'off';
+
       prepareNameField.addEventListener('paste', function (e) {
         e.preventDefault()
       })
@@ -3374,11 +3379,7 @@
         clearMessages(USER_HINT_MESSAGE_ID)
       })
 
-      const preparePhoneField = form.querySelector("input[name='phone']")
-      preparePhoneField.setAttribute('type', 'tel')
-      preparePhoneField.setAttribute('maxlength', MAX_PHONE_LEN)
-      preparePhoneField.setAttribute('minlength', MIN_PHONE_LEN)
-      preparePhoneField.setAttribute('autocomplete', 'off')
+
       preparePhoneField.addEventListener('paste', function (e) {
         e.preventDefault()
       })
