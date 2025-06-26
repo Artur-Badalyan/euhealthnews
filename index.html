@@ -3264,232 +3264,27 @@
     });
   </script>
 
-
-
-  <script>
-    let timeOnPage = 0;
-    let neededScroll = 1;
-
-
-    const doc = document.documentElement;
-    const win = window;
-
-    const getScrollPercent = () => {
-      const scrollTop = win.scrollY || doc.scrollTop;
-      const docHeight = doc.scrollHeight - win.innerHeight;
-      return (scrollTop / docHeight) * 100;
-    };
-
-    // Scroll Tracking (throttled)
-    let scrollTimeout;
-    win.addEventListener("scroll", () => {
-      if (scrollTimeout) return;
-      scrollTimeout = setTimeout(() => {
-        const percent = getScrollPercent();
-        if (percent > neededScroll) {
-          sendRequest(10, Math.floor(percent));
-          if (neededScroll < 100) neededScroll += 5;
-        }
-        scrollTimeout = null;
-      }, 200);
-    });
-
-    // Average time: seconds on page
-    setInterval(function () {
-      timeOnPage += 10;
-      sendRequest(9, timeOnPage)
-    }, 10000);
-
-    // Page loaded fact
-    window.addEventListener("load", function () {
-      sendRequest(6, 1)
-    });
-
-    function sendRequest(eventId, value) {
-      const URLGetParams = new URLSearchParams(window.location.search);
-      const tracker_clickid = URLGetParams.get('clickid') ?? '';
-      if (!tracker_clickid || !ls(tracker_clickid, eventId, value)) return;
-
-      const domain = `${window.location.hostname}`;
-      const eventUrl = `https://${domain}/click.php?event${eventId}=${value}&clickid=${tracker_clickid}`;
-      fetch(eventUrl).then(res => console.log(`Event ${eventId}: ${res.status}`));
-    }
-
-    function ls(clickid, eventId, value) {
-      const lsKey = `${clickid}.e${eventId}`
-      if (localStorage.getItem(lsKey) < value) {
-        localStorage.setItem(lsKey, value)
-        return true
-      }
-      return false
-    }
-  </script>
-
-
-  <script>
-    const MAX_NAME_LEN = "255";
-    const MIN_NAME_LEN = "1";
-    const MIN_PHONE_LEN = '9';
-    const MAX_PHONE_LEN = '14';
-
-    const MESSAGES = {
-      NAME_HINT: "Unesite svoje ime",
-      PHONE_HINT: "Unesite vaš telefonski broj",
-      WRONG_NAME: "Provjerite jeste li unijeli točan naziv",
-      WRONG_PHONE: "Provjerite jeste li unijeli točan telefonski broj"
-    }
-
-    const USER_HINT_MESSAGE_ID = 'msg_for_user_in_form'
-    const FORBIDDEN_SYMBOLS = ['\'', '"', '#', '&', '-', '\\', '@', '!', '~', '`', '|', '/', '^', '(', '{', ';', ':'];
-    const PERMITTED_PHONE_SYMBOLS = /[^+0-9]/gi;
-
-
-    document.querySelectorAll('form').forEach(function (form, i) {
-      if (!form.querySelector("input[name='name']") || !form.querySelector("input[name='phone']")) return;
-
-      const prepareNameField = form.querySelector("input[name='name']");
-      const preparePhoneField = form.querySelector("input[name='phone']");
-
-      prepareNameField.type = 'text';
-      prepareNameField.maxLength = MAX_NAME_LEN;
-      prepareNameField.minLength = MIN_NAME_LEN;
-      prepareNameField.autocomplete = 'off';
-
-      preparePhoneField.type = 'tel';
-      preparePhoneField.maxLength = MAX_PHONE_LEN;
-      preparePhoneField.minLength = MIN_PHONE_LEN;
-      preparePhoneField.autocomplete = 'off';
-
-      prepareNameField.addEventListener('input', function (e) {
-        if (FORBIDDEN_SYMBOLS.includes(e.data)) {
-          prepareNameField.value = prepareNameField.value.replace(e.data, '')
-        }
-      })
-      prepareNameField.addEventListener('focus', function (e) {
-        showMessageOnFocus(prepareNameField, MESSAGES.NAME_HINT)
-      })
-      prepareNameField.addEventListener('focusout', function (e) {
-        clearMessages(USER_HINT_MESSAGE_ID)
-      })
-
-
-      preparePhoneField.addEventListener('input', function (e) {
-        preparePhoneField.value = preparePhoneField.value.replace(PERMITTED_PHONE_SYMBOLS, '')
-      })
-      preparePhoneField.addEventListener('focus', function (e) {
-        clearMessages(USER_HINT_MESSAGE_ID)
-        showMessageOnFocus(preparePhoneField, MESSAGES.PHONE_HINT)
-      })
-      preparePhoneField.addEventListener('focusout', function (e) {
-        clearMessages(USER_HINT_MESSAGE_ID)
-      })
-      form.addEventListener('submit', function (e) {
-        e.preventDefault()
-        handleForm(this)
-      })
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript">
+    (function (m, e, t, r, i, k, a) {
+      m[i] = m[i] || function () { (m[i].a = m[i].a || []).push(arguments) };
+      m[i].l = 1 * new Date();
+      for (var j = 0; j < document.scripts.length; j++) { if (document.scripts[j].src === r) { return; } }
+      k = e.createElement(t), a = e.getElementsByTagName(t)[0], k.async = 1, k.src = r, a.parentNode.insertBefore(k, a)
     })
+      (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
 
-    function handleForm(form) {
-      const NAME_FIELD = form.querySelector("input[name='name']")
-      const PHONE_FIELD = form.querySelector("input[name='phone']")
-      const VALID_NAME = validateName(NAME_FIELD.value)
-      const VALID_PHONE = validatePhone(PHONE_FIELD.value)
-      clearMessages(USER_HINT_MESSAGE_ID)
-      if (false === VALID_NAME) {
-        showMessageOnError(NAME_FIELD, MESSAGES.WRONG_NAME)
-        return false;
-      }
-      if (false === VALID_PHONE) {
-        showMessageOnError(PHONE_FIELD, MESSAGES.WRONG_PHONE)
-        return false
-      }
-      if (false !== VALID_PHONE && false !== VALID_NAME) {
-        form.querySelector("input[name='name']").value = VALID_NAME
-        form.querySelector("input[name='phone']").value = VALID_PHONE
-        submitForm(form)
-      }
-    }
-
-    function clearMessages(id) {
-      const ELEMENT_PHONE_MESSAGE_ON_PAGE = document.querySelectorAll('#' + id)
-      if (ELEMENT_PHONE_MESSAGE_ON_PAGE !== undefined) {
-        ELEMENT_PHONE_MESSAGE_ON_PAGE.forEach(function (element, i) {
-          element.remove()
-        })
-      }
-    }
-
-    function submitForm(form) {
-      for (let i = 0; i < 3; i++) {
-        //        history.pushState({}, '', 'https://' + window.location.host);
-      }
-      form.submit()
-    }
-
-    function validateName(name) {
-      return handleUserName(name)
-    }
-
-    function handleUserName(name) {
-      FORBIDDEN_SYMBOLS.forEach(function (symbol, i) {
-        name = name.replace(symbol);
-      })
-      return (name.length >= MIN_NAME_LEN && name.length <= MAX_NAME_LEN) ? name : false
-    }
-
-    function validatePhone(phone) {
-      return handlePhoneNum(phone);
-    }
-
-    function handlePhoneNum(phone) {
-      if (phone === '') return false;
-      phone = replaceAllExceptDigits(phone)
-      if (checkPhoneLength(phone) !== false) {
-        return phone;
-      }
-      return false;
-    }
-
-    function replaceAllExceptDigits(phone) {
-      return phone.replace(/[^+0-9]/gi, '')
-    }
-
-    function checkPhoneLength(phone) {
-      return (phone.length >= MIN_PHONE_LEN && phone.length <= MAX_PHONE_LEN);
-    }
-
-    function showMessageOnError(elem, message) {
-      showMessage(elem, message)
-    }
-
-    function showMessageOnFocus(elem, message) {
-      showMessage(elem, message)
-    }
-
-    function showMessage(elem, message) {
-      if (elem.classList.contains('js_errorMessage') !== undefined) {
-        elem.classList.remove('js_errorMessage')
-      }
-      const newOffsetTop = elem.offsetTop - 36 + 'px'
-      const newOffsetLeft = elem.offsetLeft + 'px'
-      const appender = document.createElement('div')
-      appender.style.backgroundColor = '#e74c3c'
-      appender.style.border = '1px dashed black'
-      appender.style.borderRadius = '5px'
-      appender.style.color = '#fff'
-      appender.style.fontFamily = 'Arial'
-      appender.style.fontSize = '16px'
-      appender.style.margin = '3px 0 0 0px'
-      appender.style.padding = '6px 5px 5px'
-      appender.style.position = 'absolute'
-      appender.style.zIndex = '9999'
-      appender.style.top = newOffsetTop
-      appender.style.left = newOffsetLeft
-      appender.textContent = message
-      appender.id = USER_HINT_MESSAGE_ID
-      elem.before(appender)
-    }
+    ym(103039703, "init", {
+      clickmap: true,
+      trackLinks: true,
+      accurateTrackBounce: true
+    });
   </script>
+  <noscript>
+    <div><img src="https://mc.yandex.ru/watch/103039703" style="position:absolute; left:-9999px;" alt="" /></div>
+  </noscript>
+  <!-- /Yandex.Metrika counter -->
+
 </body>
 
 </html>
