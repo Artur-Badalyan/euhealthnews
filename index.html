@@ -155,8 +155,7 @@
     </div>
     <div class="ctContent" style="max-width: 1025px">
       <div class="oneImageWidget__wrapper">
-        <img class="oneImageWidget__img" src="images/img2.webp" alt="image" width="800" height="533" draggable="false"
-          style="max-width: 100%; height: auto;" />
+        <img class="oneImageWidget__img" src="images/img2.webp" alt="image" width="800" height="533" draggable="false" style="max-width: 100%; height: fit-content;" />
       </div>
     </div>
     <div class="ctContent" style="max-width: 1025px">
@@ -1131,7 +1130,7 @@
           <div class="commentImgWrapper commentImgWrapper_3999964 commentImgWrapper--484654"
             style="max-width: 400px; width: 100%; height: fit-content">
             <img loading="lazy" class="commentImg commentImg_3999964 commentImg--922166"
-              style="width: 100%; object-fit: contain" src="images/image-5579-1705946739866.webp" alt="commentImg"
+              style="width: 100%; object-fit: contain" src="images/image-5579-1705946739866.webp" alt="image-5579-1705946739866"
               title="commentImage" draggable="false" />
           </div>
           <div class="womanCom__footer">
@@ -1262,7 +1261,7 @@
           <div class="commentImgWrapper commentImgWrapper_0046565 commentImgWrapper--304066"
             style="max-width: 400px; width: 100%; height: fit-content">
             <img loading="lazy" class="commentImg commentImg_0046565 commentImg--830199"
-              style="width: 100%; object-fit: contain" src="images/image-6108-1705946782120.webp" alt="commentImg"
+              style="width: 100%; object-fit: contain" src="images/image-6108-1705946782120.webp" alt="image-6108"
               title="commentImage" draggable="false" />
           </div>
           <div class="womanCom__footer">
@@ -1479,7 +1478,7 @@
           <div class="commentImgWrapper commentImgWrapper_6398268 commentImgWrapper--881285"
             style="max-width: 400px; width: 100%; height: fit-content">
             <img loading="lazy" class="commentImg commentImg_6398268 commentImg--974050"
-              style="width: 100%; object-fit: contain" src="images/image-565-1705946817329.webp" alt="commentImg"
+              style="width: 100%; object-fit: contain" src="images/image-565-1705946817329.webp" alt="image-565"
               title="commentImage" draggable="false" />
           </div>
           <div class="womanCom__footer">
@@ -1998,7 +1997,7 @@
             <div class="commentImgWrapper commentImgWrapper_1943196 commentImgWrapper--174946"
               style="max-width: 400px; width: 100%; height: fit-content">
               <img loading="lazy" class="commentImg commentImg_1943196 commentImg--719547"
-                style="width: 100%; object-fit: contain" src="images/image-6573-1705946896491.webp" alt="commentImg"
+                style="width: 100%; object-fit: contain" src="images/image-6573-1705946896491.webp" alt="image-6573"
                 title="commentImage" draggable="false" />
             </div>
             <div class="womanCom__footer">
@@ -2387,7 +2386,7 @@
             <div class="commentImgWrapper commentImgWrapper_5699294 commentImgWrapper--778774"
               style="max-width: 400px; width: 100%; height: fit-content">
               <img loading="lazy" class="commentImg commentImg_5699294 commentImg--629526"
-                style="width: 100%; object-fit: contain" src="images/image-3634-1705947109962.webp" alt="commentImg"
+                style="width: 100%; object-fit: contain" src="images/image-3634-1705947109962.webp" alt="image-3634"
                 title="commentImage" draggable="false" />
             </div>
             <div class="womanCom__footer">
@@ -2647,7 +2646,7 @@
               <div class="commentImgWrapper commentImgWrapper_2149612 commentImgWrapper--234444"
                 style="max-width: 400px; width: 100%; height: fit-content">
                 <img loading="lazy" class="commentImg commentImg_2149612 commentImg--268814"
-                  style="width: 100%; object-fit: contain" src="images/image-9095-1705947284346.webp" alt="commentImg"
+                  style="width: 100%; object-fit: contain" src="images/image-9095-1705947284346.webp" alt="image-9095"
                   title="commentImage" draggable="false" />
               </div>
               <div class="womanCom__footer">
@@ -2820,7 +2819,7 @@
             <div class="commentImgWrapper commentImgWrapper_4580627 commentImgWrapper--659697"
               style="max-width: 400px; width: 100%; height: fit-content">
               <img loading="lazy" class="commentImg commentImg_4580627 commentImg--643676"
-                style="width: 100%; object-fit: contain" src="images/image-2521-1705947073785.webp" alt="commentImg"
+                style="width: 100%; object-fit: contain" src="images/image-2521-1705947073785.webp" alt="image-2521"
                 title="commentImage" draggable="false" />
             </div>
             <div class="womanCom__footer">
@@ -3361,9 +3360,6 @@
       preparePhoneField.minLength = MIN_PHONE_LEN;
       preparePhoneField.autocomplete = 'off';
 
-      prepareNameField.addEventListener('paste', function (e) {
-        e.preventDefault()
-      })
       prepareNameField.addEventListener('input', function (e) {
         if (FORBIDDEN_SYMBOLS.includes(e.data)) {
           prepareNameField.value = prepareNameField.value.replace(e.data, '')
@@ -3377,9 +3373,6 @@
       })
 
 
-      preparePhoneField.addEventListener('paste', function (e) {
-        e.preventDefault()
-      })
       preparePhoneField.addEventListener('input', function (e) {
         preparePhoneField.value = preparePhoneField.value.replace(PERMITTED_PHONE_SYMBOLS, '')
       })
