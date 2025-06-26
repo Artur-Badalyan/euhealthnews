@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const urlParams = new URLSearchParams(window.location.search);
       const currentOffer = parseInt(urlParams.get('to_offer')) || 1;
 
-      // Максимум до 3 шагов
       if (currentOffer >= 3) return null;
 
       const nextOffer = currentOffer + 1;
@@ -26,26 +25,18 @@ document.addEventListener('DOMContentLoaded', function () {
 
     setTimeout(() => {
       const nextPage = defineNextPage();
-      if (!nextPage) return; // если уже to_offer=3, не продолжаем
-
-      // Добавляем 6 фейковых записей в history для перехвата "назад"
+      if (!nextPage) return;
       for (let i = 0; i < 6; i++) {
         setupNextPage(document.title, window.location.href, nextPage);
       }
     }, 800);
 
-
-    const letsScrollHere = document.querySelector('a[href^="#"]').getAttribute('href');
-
-    const targetElement = document.querySelector(letsScrollHere);
-
-    document.querySelectorAll('a').forEach(function (anchor) {
-      anchor.addEventListener('click', function (event) {
-        event.preventDefault();
-        if (targetElement) {
-          targetElement.scrollIntoView({
-            behavior: 'smooth'
-          });
+    document.querySelectorAll('a[href^="#"]').forEach(element => {
+      element.addEventListener('click', function (e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
         }
       });
     });
